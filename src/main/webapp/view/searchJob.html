@@ -1,0 +1,27 @@
+<article data-ng-controller="schedulerSearchCtrl">
+	<div class="alert alert-success" data-ng-show="status.show">
+		<strong data-ng-bind="status.message"></strong>
+	</div>
+	<div class="modal-class" data-ng-show="loading.isLoading">
+		<gvit-loader size="loading.size"></gvit-loader>
+	</div>
+	<div id="custom-search-input">
+		<div class="input-group col-md-12">
+			<input type="text" class="search-query form-control" placeholder="search User Jobs" data-ng-model="searchJobNames"> <span class="input-group-btn">
+				<button class="btn btn-default" type="button" style="height: 34px;" data-ng-click="getAllJobDetails()">
+					<span class=" glyphicon glyphicon-search"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+	<section>
+		<div class="alert alert-info" data-ng-show="!showGrid">
+			<summary>No data found for selected user.</summary>
+		</div>
+	</section>
+	<article data-ng-show="showGrid">
+		<div id="custom-search-input">
+			<ng-grid column-data="grid.columns" row-data="grid.rows" rows-per-page="grid.rowNum"></ng-grid>
+		</div>
+	</article>
+</article>

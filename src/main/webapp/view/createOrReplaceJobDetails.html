@@ -1,0 +1,90 @@
+<article data-ng-controller="schedulerJobDetailsCtrl">
+	<div class="alert alert-success" data-ng-show="status.show">
+		<strong data-ng-bind="status.message"></strong>
+	</div>
+	<div class="form-group row">
+		<label for="example-text-input" class="col-xs-2 col-form-label">Client Name *</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="text" value="" id="example-text-input" placeholder="Enter Client Name" data-ng-model="job.userName" data-ng-disabled="isUpdateable">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-search-input" class="col-xs-2 col-form-label">Job Name *</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="text" value="" id="example-search-input" placeholder="Enter Job Name" data-ng-model="job.name" data-ng-disabled="isUpdateable">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-email-input" class="col-xs-2 col-form-label">Job Group Name *</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="text" value="" id="example-email-input" placeholder="Enter Job Group Name" data-ng-model="job.grpName" data-ng-disabled="isUpdateable">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-url-input" class="col-xs-2 col-form-label">Job Desc</label>
+		<div class="col-xs-10">
+			<textarea class="form-control" rows="5" cols="20" data-ng-model="job.desc" placeholder="Enter Job Description"></textarea>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-tel-input" class="col-xs-2 col-form-label">GL File Name *</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="text" id="example-tel-input" placeholder="Enter GL File Name" data-ng-model="job.glName">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-password-input" class="col-xs-2 col-form-label">Output File Name</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="text" value="" id="example-password-input" placeholder="Enter Output File Name" data-ng-model="job.outFileName">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-number-input" class="col-xs-2 col-form-label">Map Name *</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="text" value="" id="example-text-input" placeholder="Enter Map Name" data-ng-model="job.mapName">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-datetime-local-input" class="col-xs-2 col-form-label">Job Start time</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" placeholder="Enter Date Time" data-ng-model="job.startTime">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-datetime-local-input" class="col-xs-2 col-form-label">Execution Periods [daily]</label>
+		<div class="col-xs-10 table-responsive">
+			<table class="table table-borderless table-condensed">
+				<tr>
+					<td data-ng-repeat="week in job.weeks"><span data-ng-repeat="(key,value) in week"> {{key | singleCharUpper}}</span></td>
+				</tr>
+				<tr>
+					<td data-ng-repeat="week in job.weeks"><input type="checkbox" class="checkbox-size" data-ng-repeat="(key,value) in week" data-ng-model="week[key]" />{{key}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-datetime-local-input" class="col-xs-2 col-form-label">Execution Periods [Monthly]</label>
+		<div class="col-xs-10 table-responsive">
+			<table class="table table-borderless table-condensed">
+				<tr>
+					<td data-ng-repeat="month in job.months"><span data-ng-repeat="(key,value) in month"> {{key | firstCharUpper}}</span></td>
+				</tr>
+				<tr>
+					<td data-ng-repeat="month in job.months"><input type="checkbox" class="checkbox-size" data-ng-repeat="(key,value) in month" data-ng-model="month[key]" />{{key |
+						firstCharUpper}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-datetime-local-input" class="col-xs-2 col-form-label">Job End time</label>
+		<div class="col-xs-10">
+			<input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" placeholder="Enter Date Time" data-ng-model="job.endTime">
+		</div>
+	</div>
+	<div class="form-group row" style="padding-right:17px">
+		<button class="btn btn-primary pull-right" data-ng-click="goBack()">Back</button>
+		<button class="btn btn-success pull-right" style="margin-right: 10px" data-ng-click="createNewJob()">Submit</button>
+	</div>
+</article>

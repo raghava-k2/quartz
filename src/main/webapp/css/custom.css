@@ -1,0 +1,55 @@
+main {
+	border-width: 10px;
+	border-color: darkkhaki;
+	border-style: solid;
+	border-radius: 7px;
+	margin: 10px;
+	padding: 20px;
+}
+
+#custom-search-input {
+	padding-top: 20px;
+}
+
+.custom-btn {
+	display: inline-block;;
+	border-radius: 50%;
+	width: 18px;
+	background-color: yellowgreen;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.custom-btn:HOVER {
+	text-decoration: none;
+}
+
+.round-btn {
+	width: 33px;
+	height: 29px;
+	border-radius: 50%;
+	background-color: dimgray;
+}
+
+.table-borderless tbody tr td,.table-borderless tbody tr th,.table-borderless thead tr th
+	{
+	border: none;
+}
+
+.modal-class {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	z-index: 1050;
+	background-color: rgba(235, 235, 235, .5);
+}
+
+.checkbox-size {
+	width: 15px;
+	height: 15px;
+}

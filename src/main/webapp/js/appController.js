@@ -1,0 +1,312 @@
+angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gridConstants', {
+	'ACTION_OPTIONS' : [ 'BLOCKED', 'COMPLETED', 'ERROR', 'NONE', 'NORMAL', 'PAUSED' ],
+	'WEEKS' : [ {
+		'sunday' : false
+	}, {
+		'monday' : false
+	}, {
+		'tuesday' : false
+	}, {
+		'wednesday' : false
+	}, {
+		'thrusday' : false
+	}, {
+		'friday' : false
+	}, {
+		'saturday' : false
+	} ],
+	'MONTHS' : [ {
+		'jan' : false
+	}, {
+		'feb' : false
+	}, {
+		'mar' : false
+	}, {
+		'apr' : false
+	}, {
+		'may' : false
+	}, {
+		'jun' : false
+	}, {
+		'jul' : false
+	}, {
+		'aug' : false
+	}, {
+		'sep' : false
+	}, {
+		'oct' : false
+	}, {
+		'nov' : false
+	}, {
+		'dec' : false
+	} ]
+}).config([ '$stateProvider', '$urlRouterProvider', function(stateProvider, urlRouterProvider) {
+	urlRouterProvider.otherwise('/searchJob');
+	stateProvider.state('scheduler', {
+		controller : 'schedulerSearchCtrl',
+		url : '/searchJob',
+		views : {
+			mainView : {
+				templateUrl : 'view/searchJob.html'
+			}
+		}
+	}).state('jobDetails', {
+		controller : 'schedulerJobDetailsCtrl',
+		url : '/schedulerJobDetails',
+		views : {
+			mainView : {
+				templateUrl : 'view/createOrReplaceJobDetails.html'
+			}
+		}
+	});
+} ]).filter('singleCharUpper', function() {
+	return function(result) {
+		return result ? result.charAt(0).toUpperCase() : '';
+	};
+}).filter('firstCharUpper', function() {
+	return function(result) {
+		return result ? result.charAt(0).toUpperCase() + result.substring(1) : '';
+	};
+}).service('schedulerService', [ '$http', 'gridConstants', function($http, gridConst) {
+	let
+	methods = {
+		createJob : function(serverData) {
+			return $http({
+				url : './do/createjob',
+				method : 'post',
+				data : serverData,
+				headers : {
+					'content-type' : 'application/json'
+				}
+			}).success(function(data) {
+				return data;
+			}).error(function(data) {
+				return data;
+			});
+		},
+		getJobdetails : function(searchJobName) {
+			return $http({
+				url : './do/getjobdetails',
+				method : 'get',
+				params : {
+					jobName : searchJobName
+				}
+			}).success(function(data) {
+				return data;
+			}).error(function(data) {
+				return data;
+			});
+		},
+		deleteJobs : function(data) {
+			return $http({
+				url : './do/deletejobs',
+				method : 'delete',
+				data : data,
+				headers : {
+					'content-type' : 'application/json'
+				}
+			}).success(function(data) {
+				return data;
+			}).error(function(data) {
+				return data;
+			});
+		},
+		updateJobs : function(data) {
+			return $http({
+				url : './do/updatejob',
+				method : 'put',
+				data : data,
+				headers : {
+					'content-type' : 'application/json'
+				}
+			}).success(function(data) {
+				return data;
+			}).error(function(data) {
+				return data;
+			});
+		},
+		setJobDetails : function(data) {
+			let
+			setWeeks = function(days) {
+				if (days) {
+					if ((days[0] === '*'))
+						gridConst.WEEKS.map(function(obj, idx) {
+							obj[Object.keys(obj)[0]] = true;
+						});
+					else
+						days.map(function(obj, idx) {
+							let
+							tmpobj = gridConst.WEEKS[obj - 1];
+							tmpobj[Object.keys(tmpobj)] = true;
+						});
+				}
+				return gridConst.WEEKS;
+			}, setMonths = function(months) {
+				if (months)
+					if ((months[0] === '*'))
+						gridConst.MONTHS.map(function(obj, idx) {
+							obj[Object.keys(obj)[0]] = true;
+						});
+					else
+						months.map(function(obj) {
+							let
+							tmpobj = gridConst.MONTHS[obj];
+							tmpobj[Object.keys(tmpobj)] = true;
+						});
+				return gridConst.MONTHS;
+			}, job = {
+				clientId : data.clientId,
+				userName : data.userName,
+				name : data.jobName,
+				grpName : data.jobGroupName,
+				desc : data.jobDescription,
+				startTime : data.jobDateTime ? new Date(data.jobDateTime.substring(0, data.jobDateTime.length - 2)) : '',
+				endTime : data.jobEndtime ? new Date(data.jobEndtime.substring(0, data.jobEndtime.length - 2)) : '',
+				weeks : setWeeks(data.jobExeDays),
+				months : setMonths(data.jobExeMonths),
+				glName : data.glInfo ? data.glInfo.glFileName : '',
+				outFileName : data.glInfo ? data.glInfo.outputFileName : '',
+				mapName : data.glInfo ? data.glInfo.mapName : ''
+			};
+			return job;
+		},
+		getMessage : function(serverData, msg) {
+			let
+			status = {};
+			if (serverData.data.status === 'success') {
+				status.show = true;
+				status.message = msg;
+			} else {
+				status.show = true;
+				status.message = serverData.data.msg;
+			}
+			return status;
+		}
+	}, gridInfo = {}, update = {};
+	return {
+		createJob : methods.createJob,
+		getJobdetails : methods.getJobdetails,
+		setJobDetails : methods.setJobDetails,
+		deleteJobs : methods.deleteJobs,
+		updateJobs : methods.updateJobs,
+		getMessage : methods.getMessage,
+		getGridInfo : function() {
+			return gridInfo;
+		},
+		setGridInfo : function(info) {
+			gridInfo = info;
+		},
+		setUpdate : function(flag) {
+			update = flag;
+		},
+		getUpdate : function() {
+			return update;
+		}
+	};
+} ]).controller('schedulerSearchCtrl', [ '$scope', '$timeout', '$state', 'schedulerService', 'gridConstants', function(scope, timeout, state, schService, gridConst) {
+	scope.grid = {};
+	scope.grid.columns = [ 'Id', 'User Name', 'Job Name', 'Job Group Name', 'Start Time', 'Next Execute Time', 'Status' ];
+	scope.grid.rowNum = [ 10, 20, 30, 40, 50 ];
+	scope.grid.rows = [];
+	scope.showGrid = false;
+	scope.loading = {
+		isLoading : false,
+		size : '50px'
+	};
+	scope.getAllJobDetails = function() {
+		scope.loading.isLoading = true;
+		scope.status = {
+			show : false
+		};
+		schService.getJobdetails(scope.searchJobNames).then(function(data) {
+			scope.grid.rows = [];
+			if (data.data.length !== 0)
+				data.data.map(function(obj, idx) {
+					scope.grid.rows.push(obj);
+					scope.grid.rows[idx].id = (idx + 1);
+					scope.grid.rows[idx].action = gridConst.ACTION_OPTIONS.slice();
+					scope.grid.rows[idx].changed = scope.grid.rows[idx].status;
+				});
+			if (data.data.length === 0)
+				scope.showGrid = false;
+			else
+				scope.showGrid = true;
+			scope.loading.isLoading = false;
+		});
+		scope.$on('view_job _details', function(event, data) {
+			schService.setUpdate({
+				flag : true
+			});
+			schService.setGridInfo(data);
+			state.go('jobDetails');
+		});
+		scope.$on('delete_jobs', function(event, data) {
+			console.log(event);
+			schService.deleteJobs(data).then(function(serverData) {
+				scope.status = schService.getMessage(serverData, "Successfully deleted Jobs : " + data);
+				scope.getAllJobDetails();
+			});
+		});
+	};
+} ]).controller('schedulerJobDetailsCtrl', [ '$scope', 'schedulerService', '$state', 'gridConstants', function(scope, schService, state, gridConst) {
+	scope.job = {
+		weeks : gridConst.WEEKS.slice(),
+		months : gridConst.MONTHS.slice()
+	};
+	scope.status = {
+		show : false,
+		message : ''
+	};
+	scope.createNewJob = function() {
+		let
+		findDays = function findDays() {
+			let
+			days = [], count = 0;
+			scope.job.weeks.map(function(obj, idx) {
+				if (obj[Object.keys(obj)[0]])
+					days[count++] = idx + 1;
+			});
+			return days;
+		}, findMonths = function findMonths() {
+			let
+			months = [], count = 0;
+			scope.job.months.map(function(obj, idx) {
+				if (obj[Object.keys(obj)[0]])
+					months[count++] = idx;
+			});
+			return months;
+		}, trimDate = function trimDate(obj) {
+			return obj ? obj.toString().substring(0, obj.toString().lastIndexOf(':') + 3) : '';
+		}, data = {
+			'cliendId' : this.job.clientId ? this.job.clientId : '',
+			'userName' : this.job.userName,
+			'jobName' : this.job.name,
+			'jobGroupName' : this.job.grpName,
+			'jobDescription' : this.job.desc,
+			'jobDateTime' : trimDate(this.job.startTime),
+			'jobEndtime' : trimDate(this.job.endTime),
+			'jobExeDays' : findDays(),
+			'jobExeMonths' : findMonths(),
+			'glInfo' : {
+				'glFileName' : this.job.glName,
+				'outputFileName' : this.job.outFileName,
+				'mapName' : this.job.mapName
+			}
+		};
+		if (schService.getUpdate().flag === true)
+			schService.updateJobs(data).then(function(serverData) {
+				scope.stauts = schService.getMessage(serverData, "Successfully updated Job : " + this.job.name);
+			});
+		else
+			schService.createJob(data).then(function(serverData) {
+				scope.status = schService.getMessage(serverData, "Successfully created Job : " + this.job.name);
+			});
+	};
+	scope.goBack = function() {
+		schService.getUpdate().flag = false;
+		state.go('scheduler');
+	};
+	if (schService.getUpdate().flag === true) {
+		scope.job = schService.setJobDetails(schService.getGridInfo());
+	}
+} ]);
