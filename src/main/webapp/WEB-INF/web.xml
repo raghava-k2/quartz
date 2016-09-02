@@ -36,7 +36,7 @@
 	</servlet>
 	<servlet>
 		<servlet-name>demo</servlet-name>
-		<servlet-class>com.kvr.StartScheduler</servlet-class>
+		<servlet-class>com.gli.StartScheduler</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>demo</servlet-name>

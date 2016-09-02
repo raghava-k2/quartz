@@ -221,3 +221,155 @@ ADMA5013I: Application kvrquartz Maven Webapp installed successfully.
 -------------------------------------------------------------------------------------------------------------------------------
 MyEclipse: deployment END project: kvrquartz Maven Webapp server: websphere85Server#AppSrv01 time: Mon Aug 22 13:11:12 IST 2016
 -------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment START exploded project: GLIquartz server: websphere85Server#AppSrv01 time: Tue Aug 30 12:36:57 IST 2016
+-----------------------------------------------------------------------------------------------------------------------------
+WASX7357I: By request, this scripting client is not connected to any server process. Certain configuration and application operations will be available in local mode.
+WASX7303I: The following options are passed to the scripting environment and are available as arguments that are stored in the argv variable: "[C:\\WebSphere85\\AppServer\\profiles\\AppSrv01\\installableApps\\GLIquartz.war, HYRDLT1118Node01Cell, HYRDLT1118Node01, server1, /GLIquartz, GLIquartz, {{"GLIquartz.war" "GLIquartz.war,WEB-INF/web.xml" default_host}}, {{.* .* AppDeploymentOption.Yes 1}}, GLIquartz.war, false]"
+-contextroot "/GLIquartz" -server "server1" -nopreCompileJSPs -distributeApp -useMetaDataFromBinary -nodeployejb -appname "GLIquartz" -createMBeansForResources -reloadEnabled -reloadInterval 1 -deployws -validateinstall off -noprocessEmbeddedConfig  -filepermission .*.dll=755#.*.so=755#.*.a=755#.*.sl=755  -buildVersion Unknown  -noallowDispatchRemoteInclude  -noallowServiceRemoteInclude  -MapWebModToVH {{"GLIquartz.war" "GLIquartz.war,WEB-INF/web.xml" default_host}} -JSPReloadForWebMod {{.* .* AppDeploymentOption.Yes 1}}
+C:\WebSphere85\AppServer\profiles\AppSrv01\installableApps\GLIquartz.war
+HYRDLT1118Node01Cell
+HYRDLT1118Node01
+server1
+/GLIquartz
+GLIquartz
+{"GLIquartz.war" "GLIquartz.war,WEB-INF/web.xml" default_host}
+{.* .* AppDeploymentOption.Yes 1}
+GLIquartz.war
+false
+WASX7327I: Contents of was.policy file:
+ //
+// Template policy file for enterprise application.
+// Extra permissions can be added if required by the enterprise application.
+//
+// NOTE: Syntax errors in the policy files will cause the enterprise application FAIL to start.
+//       Extreme care should be taken when editing these policy files. It is advised to use
+//       the policytool provided by the JDK for editing the policy files
+//       (WAS_HOME/java/jre/bin/policytool). 
+//
+
+grant codeBase "file:${application}" {
+};
+
+grant codeBase "file:${jars}" {
+};
+
+grant codeBase "file:${connectorComponent}" {
+};
+
+grant codeBase "file:${webComponent}" {
+};
+
+grant codeBase "file:${ejbComponent}" {
+};
+
+
+ADMA5016I: Installation of GLIquartz started.
+ADMA5058I: Application and module versions are validated with versions of deployment targets.
+WSWS0041I: Web services deploy task completed successfully.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5081I: The bootstrap address for client module is configured in the WebSphere Application Server repository.
+ADMA5053I: The library references for the installed optional package are created.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5001I: The application binaries are saved in C:\WebSphere85\AppServer\profiles\AppSrv01\wstemp\Script156da45c02b\workspace\cells\HYRDLT1118Node01Cell\applications\GLIquartz.ear\GLIquartz.ear
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+SECJ0400I: Successfully updated the application GLIquartz with the appContextIDForSecurity information.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5113I: Activation plan created successfully.
+ADMA5011I: The cleanup of the temp directory for application GLIquartz is complete.
+ADMA5013I: Application GLIquartz installed successfully.
+------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment END project: GLIquartz server: websphere85Server#AppSrv01 time: Tue Aug 30 12:37:13 IST 2016
+------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment START exploded project: GLIquartz server: websphere85Server#AppSrv01 time: Tue Aug 30 13:05:58 IST 2016
+-----------------------------------------------------------------------------------------------------------------------------
+WASX7357I: By request, this scripting client is not connected to any server process. Certain configuration and application operations will be available in local mode.
+WASX7303I: The following options are passed to the scripting environment and are available as arguments that are stored in the argv variable: "[GLIquartz]"
+GLIquartz
+ADMA5017I: Uninstallation of GLIquartz started.
+ADMA5104I: The server index entry for WebSphere:cell=HYRDLT1118Node01Cell,node=HYRDLT1118Node01 is updated successfully.
+ADMA5102I: The configuration data for GLIquartz from the configuration repository is deleted successfully.
+ADMA5011I: The cleanup of the temp directory for application GLIquartz is complete.
+ADMA5106I: Application GLIquartz uninstalled successfully.
+------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment END project: GLIquartz server: websphere85Server#AppSrv01 time: Tue Aug 30 13:06:04 IST 2016
+------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment START exploded project: GLIquartz server: websphere85Server#AppSrv01 time: Tue Aug 30 13:14:10 IST 2016
+-----------------------------------------------------------------------------------------------------------------------------
+WASX7357I: By request, this scripting client is not connected to any server process. Certain configuration and application operations will be available in local mode.
+WASX7303I: The following options are passed to the scripting environment and are available as arguments that are stored in the argv variable: "[C:\\WebSphere85\\AppServer\\profiles\\AppSrv01\\installableApps\\GLIquartz.war, HYRDLT1118Node01Cell, HYRDLT1118Node01, server1, /GLIquartz, GLIquartz, {{"GLIquartz.war" "GLIquartz.war,WEB-INF/web.xml" default_host}}, {{.* .* AppDeploymentOption.Yes 1}}, GLIquartz.war, false]"
+-contextroot "/GLIquartz" -server "server1" -nopreCompileJSPs -distributeApp -useMetaDataFromBinary -nodeployejb -appname "GLIquartz" -createMBeansForResources -reloadEnabled -reloadInterval 1 -deployws -validateinstall off -noprocessEmbeddedConfig  -filepermission .*.dll=755#.*.so=755#.*.a=755#.*.sl=755  -buildVersion Unknown  -noallowDispatchRemoteInclude  -noallowServiceRemoteInclude  -MapWebModToVH {{"GLIquartz.war" "GLIquartz.war,WEB-INF/web.xml" default_host}} -JSPReloadForWebMod {{.* .* AppDeploymentOption.Yes 1}}
+C:\WebSphere85\AppServer\profiles\AppSrv01\installableApps\GLIquartz.war
+HYRDLT1118Node01Cell
+HYRDLT1118Node01
+server1
+/GLIquartz
+GLIquartz
+{"GLIquartz.war" "GLIquartz.war,WEB-INF/web.xml" default_host}
+{.* .* AppDeploymentOption.Yes 1}
+GLIquartz.war
+false
+WASX7327I: Contents of was.policy file:
+ //
+// Template policy file for enterprise application.
+// Extra permissions can be added if required by the enterprise application.
+//
+// NOTE: Syntax errors in the policy files will cause the enterprise application FAIL to start.
+//       Extreme care should be taken when editing these policy files. It is advised to use
+//       the policytool provided by the JDK for editing the policy files
+//       (WAS_HOME/java/jre/bin/policytool). 
+//
+
+grant codeBase "file:${application}" {
+};
+
+grant codeBase "file:${jars}" {
+};
+
+grant codeBase "file:${connectorComponent}" {
+};
+
+grant codeBase "file:${webComponent}" {
+};
+
+grant codeBase "file:${ejbComponent}" {
+};
+
+
+ADMA5016I: Installation of GLIquartz started.
+ADMA5058I: Application and module versions are validated with versions of deployment targets.
+WSWS0041I: Web services deploy task completed successfully.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5081I: The bootstrap address for client module is configured in the WebSphere Application Server repository.
+ADMA5053I: The library references for the installed optional package are created.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5001I: The application binaries are saved in C:\WebSphere85\AppServer\profiles\AppSrv01\wstemp\Script156da67d4c1\workspace\cells\HYRDLT1118Node01Cell\applications\GLIquartz.ear\GLIquartz.ear
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+SECJ0400I: Successfully updated the application GLIquartz with the appContextIDForSecurity information.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5005I: The application GLIquartz is configured in the WebSphere Application Server repository.
+ADMA5113I: Activation plan created successfully.
+ADMA5011I: The cleanup of the temp directory for application GLIquartz is complete.
+ADMA5013I: Application GLIquartz installed successfully.
+------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment END project: GLIquartz server: websphere85Server#AppSrv01 time: Tue Aug 30 13:14:25 IST 2016
+------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment START exploded project: GLIquartz server: websphere85Server#AppSrv01 time: Thu Sep 01 12:15:09 IST 2016
+-----------------------------------------------------------------------------------------------------------------------------
+WASX7357I: By request, this scripting client is not connected to any server process. Certain configuration and application operations will be available in local mode.
+WASX7303I: The following options are passed to the scripting environment and are available as arguments that are stored in the argv variable: "[GLIquartz]"
+GLIquartz
+ADMA5017I: Uninstallation of GLIquartz started.
+ADMA5104I: The server index entry for WebSphere:cell=HYRDLT1118Node01Cell,node=HYRDLT1118Node01 is updated successfully.
+ADMA5102I: The configuration data for GLIquartz from the configuration repository is deleted successfully.
+ADMA5011I: The cleanup of the temp directory for application GLIquartz is complete.
+ADMA5106I: Application GLIquartz uninstalled successfully.
+------------------------------------------------------------------------------------------------------------------
+MyEclipse: deployment END project: GLIquartz server: websphere85Server#AppSrv01 time: Thu Sep 01 12:15:16 IST 2016
+------------------------------------------------------------------------------------------------------------------

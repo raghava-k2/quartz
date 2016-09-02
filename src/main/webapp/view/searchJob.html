@@ -14,11 +14,6 @@
 			</span>
 		</div>
 	</div>
-	<section>
-		<div class="alert alert-info" data-ng-show="!showGrid">
-			<summary>No data found for selected user.</summary>
-		</div>
-	</section>
 	<article data-ng-show="showGrid">
 		<div id="custom-search-input">
 			<ng-grid column-data="grid.columns" row-data="grid.rows" rows-per-page="grid.rowNum"></ng-grid>

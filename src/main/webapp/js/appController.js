@@ -1,44 +1,44 @@
-angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gridConstants', {
+angular.module('myApp', [ 'grid', 'gvit', 'ui.router' ]).constant('gridConstants', {
 	'ACTION_OPTIONS' : [ 'BLOCKED', 'COMPLETED', 'ERROR', 'NONE', 'NORMAL', 'PAUSED' ],
 	'WEEKS' : [ {
-		'sunday' : false
+		'sunday' : true
 	}, {
-		'monday' : false
+		'monday' : true
 	}, {
-		'tuesday' : false
+		'tuesday' : true
 	}, {
-		'wednesday' : false
+		'wednesday' : true
 	}, {
-		'thrusday' : false
+		'thrusday' : true
 	}, {
-		'friday' : false
+		'friday' : true
 	}, {
-		'saturday' : false
+		'saturday' : true
 	} ],
 	'MONTHS' : [ {
-		'jan' : false
+		'jan' : true
 	}, {
-		'feb' : false
+		'feb' : true
 	}, {
-		'mar' : false
+		'mar' : true
 	}, {
-		'apr' : false
+		'apr' : true
 	}, {
-		'may' : false
+		'may' : true
 	}, {
-		'jun' : false
+		'jun' : true
 	}, {
-		'jul' : false
+		'jul' : true
 	}, {
-		'aug' : false
+		'aug' : true
 	}, {
-		'sep' : false
+		'sep' : true
 	}, {
-		'oct' : false
+		'oct' : true
 	}, {
-		'nov' : false
+		'nov' : true
 	}, {
-		'dec' : false
+		'dec' : true
 	} ]
 }).config([ '$stateProvider', '$urlRouterProvider', function(stateProvider, urlRouterProvider) {
 	urlRouterProvider.otherwise('/searchJob');
@@ -128,32 +128,38 @@ angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gr
 		setJobDetails : function(data) {
 			let
 			setWeeks = function(days) {
+				let
+				weeks = angular.copy(gridConst.WEEKS);
 				if (days) {
 					if ((days[0] === '*'))
-						gridConst.WEEKS.map(function(obj, idx) {
-							obj[Object.keys(obj)[0]] = true;
-						});
+						return weeks;
 					else
-						days.map(function(obj, idx) {
+						weeks.map(function(obj, idx) {
 							let
-							tmpobj = gridConst.WEEKS[obj - 1];
-							tmpobj[Object.keys(tmpobj)] = true;
+							index = days.findIndex(function(val) {
+								return parseInt(val) === (idx + 1);
+							});
+							if (index == -1)
+								obj[Object.keys(obj)[0]] = false;
 						});
 				}
-				return gridConst.WEEKS;
+				return weeks;
 			}, setMonths = function(months) {
+				let
+				tempMonths = angular.copy(gridConst.MONTHS);
 				if (months)
 					if ((months[0] === '*'))
-						gridConst.MONTHS.map(function(obj, idx) {
-							obj[Object.keys(obj)[0]] = true;
-						});
+						return tempMonths;
 					else
-						months.map(function(obj) {
+						tempMonths.map(function(obj, idx) {
 							let
-							tmpobj = gridConst.MONTHS[obj];
-							tmpobj[Object.keys(tmpobj)] = true;
+							index = months.findIndex(function(val) {
+								return parseInt(val) === idx;
+							});
+							if (index == -1)
+								obj[Object.keys(obj)[0]] = false;
 						});
-				return gridConst.MONTHS;
+				return tempMonths;
 			}, job = {
 				clientId : data.clientId,
 				userName : data.userName,
@@ -214,26 +220,27 @@ angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gr
 		size : '50px'
 	};
 	scope.getAllJobDetails = function() {
+		scope.count = 0;
 		scope.loading.isLoading = true;
-		scope.status = {
-			show : false
-		};
+		if (!scope.deleteFlag)
+			scope.status = {
+				show : false
+			};
 		schService.getJobdetails(scope.searchJobNames).then(function(data) {
 			scope.grid.rows = [];
 			if (data.data.length !== 0)
 				data.data.map(function(obj, idx) {
 					scope.grid.rows.push(obj);
 					scope.grid.rows[idx].id = (idx + 1);
-					scope.grid.rows[idx].action = gridConst.ACTION_OPTIONS.slice();
+					scope.grid.rows[idx].action = angular.copy(gridConst.ACTION_OPTIONS);
 					scope.grid.rows[idx].changed = scope.grid.rows[idx].status;
 				});
-			if (data.data.length === 0)
-				scope.showGrid = false;
-			else
-				scope.showGrid = true;
+			scope.showGrid = true;
 			scope.loading.isLoading = false;
+			scope.deleteFlag = false;
 		});
-		scope.$on('view_job _details', function(event, data) {
+		scope.$on('view_job_details', function(event, data) {
+			console.log('inside upadate method');
 			schService.setUpdate({
 				flag : true
 			});
@@ -241,17 +248,20 @@ angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gr
 			state.go('jobDetails');
 		});
 		scope.$on('delete_jobs', function(event, data) {
-			console.log(event);
-			schService.deleteJobs(data).then(function(serverData) {
-				scope.status = schService.getMessage(serverData, "Successfully deleted Jobs : " + data);
-				scope.getAllJobDetails();
-			});
+			if (scope.count == 0) {
+				scope.count = 1;
+				schService.deleteJobs(data).then(function(serverData) {
+					scope.status = schService.getMessage(serverData, "Successfully deleted Jobs : " + data);
+					scope.deleteFlag = true;
+					scope.getAllJobDetails();
+				});
+			}
 		});
 	};
 } ]).controller('schedulerJobDetailsCtrl', [ '$scope', 'schedulerService', '$state', 'gridConstants', function(scope, schService, state, gridConst) {
 	scope.job = {
-		weeks : gridConst.WEEKS.slice(),
-		months : gridConst.MONTHS.slice()
+		weeks : angular.copy(gridConst.WEEKS),
+		months : angular.copy(gridConst.MONTHS)
 	};
 	scope.status = {
 		show : false,
@@ -278,7 +288,7 @@ angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gr
 		}, trimDate = function trimDate(obj) {
 			return obj ? obj.toString().substring(0, obj.toString().lastIndexOf(':') + 3) : '';
 		}, data = {
-			'cliendId' : this.job.clientId ? this.job.clientId : '',
+			'clientId' : this.job.clientId,
 			'userName' : this.job.userName,
 			'jobName' : this.job.name,
 			'jobGroupName' : this.job.grpName,
@@ -295,11 +305,11 @@ angular.module('myApp', [ 'grid', 'gvit', 'ngRoute', 'ui.router' ]).constant('gr
 		};
 		if (schService.getUpdate().flag === true)
 			schService.updateJobs(data).then(function(serverData) {
-				scope.stauts = schService.getMessage(serverData, "Successfully updated Job : " + this.job.name);
+				scope.status = schService.getMessage(serverData, "Successfully updated Job : " + scope.job.name);
 			});
 		else
 			schService.createJob(data).then(function(serverData) {
-				scope.status = schService.getMessage(serverData, "Successfully created Job : " + this.job.name);
+				scope.status = schService.getMessage(serverData, "Successfully created Job : " + scope.job.name);
 			});
 	};
 	scope.goBack = function() {

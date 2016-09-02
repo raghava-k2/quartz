@@ -55,7 +55,7 @@
 									<td><input type="checkbox" class="checkbox-size" data-ng-model="row.checked" data-ng-checked="check_all" data-ng-change="toggleCheck(this)"/></td>\
 									<td data-ng-bind="row.id"></td>\
 	                                <td data-ng-bind="row.userName"></td>\
-									<td><a href="#" data-toggle="tooltip" data-placement="right" title=""\
+									<td><a href=""\
 									    data-ng-bind="row.jobName" data-ng-click="editJobDetails(this)"></a></td>\
 									<td data-ng-bind="row.jobGroupName"></td>\
 									<td data-ng-bind="row.jobDateTime"></td>\
@@ -64,6 +64,9 @@
 	                                  data-ng-init="row.changed = row.changed || row.action[0]"\
 	                                 data-ng-options="row for row in row.action" data-ng-model="row.changed"></select>\
 	                                </td>\
+								</tr>\
+								<tr data-ng-show="!temprdata.length">\
+									<td colspan="{{cdata.length+1}}" class="alert alert-info">No data is available</td>\
 								</tr>\
 								</tbody>\
 								<tfoot><tr><td colspan="{{cdata.length+1}}"><button class="btn btn-primary" data-ng-disabled="pagNa.firstBtn" data-ng-click="first()">\
@@ -132,7 +135,7 @@
 												this.checkCurrPage();
 											};
 											scope.editJobDetails = function(object) {
-												$rootScope.$broadcast('view_job _details', object.row);
+												$rootScope.$broadcast('view_job_details', object.row);
 											};
 											scope.toggleAll = function(obj) {
 												if (obj.check_all)
@@ -157,6 +160,7 @@
 													$rootScope.$broadcast('delete_jobs', gridConst.selectedItems);
 											}
 											scope.checkRowCount();
+											gridConst.selectedItems.length = 0;
 										},
 										post : function(scope, ele, attr) {
 											scope.$watch('rdata', function(oldVal, newVal) {
@@ -164,6 +168,7 @@
 													scope.temprdata = scope.rdata;
 													gridService.renderGrid(scope);
 													scope.checkRowCount();
+													gridConst.selectedItems.length = 0;
 												}
 											});
 										}
